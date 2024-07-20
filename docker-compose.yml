@@ -1,0 +1,19 @@
+﻿services:
+  project_x:
+    image: project_x
+    build:
+      context: .
+      dockerfile: Dockerfile   
+    ports:
+      - "8089:8080"
+    depends_on:
+      - database_project_x
+    environment:
+      - ConnectionString__DefaultConnection=Server=database_project_x,1433;Database=Project_X;User=sa;Password=StrongPassword123
+  database_project_x:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      MSSQL_SA_PASSWORD: "StrongPassword123"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1437:1433"
